@@ -12,7 +12,7 @@ This is an Arduino library for the Toshiba TB6612FNG DC motor driver
 
 ## Usage
 
-See [example](https://github.com/TheDIYGuy999/DRV8833/blob/master/examples/TB6612FNG/TB6612FNG.ino).
+See [example](https://github.com/TheDIYGuy999/TB6612FNG/blob/master/examples/TB6612FNG/TB6612FNG.ino).
 
 
 (c) 2016 TheDIYGuy999
