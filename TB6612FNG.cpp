@@ -36,7 +36,7 @@ TB6612FNG::TB6612FNG(int pin1, int pin2, int pwmPin, int minInput, int maxInput,
 
 // SYNTAX: Input value, max PWM, ramptime in ms per 1 PWM increment
 // true = brake active, false = brake in neutral position inactive
-void TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neutralBrake) {
+boolean TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neutralBrake) {
     _controlValue = controlValue;
     _maxPWM = maxPWM;
     _rampTime = rampTime;
@@ -48,7 +48,7 @@ void TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neutra
     
     // Fader (allows to ramp the motor speed slowly up & down) --------------------
     if (_rampTime >= 1) {
-        _currentMillis = millis();
+        unsigned long _currentMillis = millis();
         if (_currentMillis - _previousMillis >= _rampTime) {
             // Increase
             if (_controlValue > _controlValueRamp && _controlValueRamp < _maxInput) {
@@ -70,11 +70,13 @@ void TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neutra
         digitalWrite(_pin1, HIGH);
         digitalWrite(_pin2, LOW);
         analogWrite(_pwmPin, map(_controlValueRamp, _maxNeutral, _maxInput, 0, _maxPWM));
+        return true;
     }
     else if (_controlValueRamp <= _minNeutral) { // Reverse
         digitalWrite(_pin1, LOW);
         digitalWrite(_pin2, HIGH);
         analogWrite(_pwmPin, map(_controlValueRamp, _minNeutral, _minInput, 0, _maxPWM));
+        return true;
     }
     else { // Neutral
         if (_neutralBrake) {
@@ -86,6 +88,7 @@ void TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neutra
             digitalWrite(_pin2, LOW);
             digitalWrite(_pwmPin, HIGH);
         }
+        return false;
     }
 }
 
