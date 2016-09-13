@@ -53,16 +53,26 @@ boolean TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neu
             // Increase
             if (_controlValue > _controlValueRamp && _controlValueRamp < _maxInput) {
                 _controlValueRamp++;
+                _upwards = true;
+                _downwards = false;
             }
             // Decrease
-            if (_controlValue < _controlValueRamp && _controlValueRamp > _minInput) {
+            else if (_controlValue < _controlValueRamp && _controlValueRamp > _minInput) {
                 _controlValueRamp--;
+                _upwards = false;
+                _downwards = true;
+            }
+            else {
+                _upwards = false;
+                _downwards = false;
             }
             _previousMillis = _currentMillis;
         }
     }
     else {
         _controlValueRamp = _controlValue;
+        _upwards = false;
+        _downwards = false;
     }
     
     // H bridge controller -------------------
@@ -70,12 +80,16 @@ boolean TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neu
         digitalWrite(_pin1, HIGH);
         digitalWrite(_pin2, LOW);
         analogWrite(_pwmPin, map(_controlValueRamp, _maxNeutral, _maxInput, 0, _maxPWM));
+        _forward = true;
+        _reverse = false;
         return true;
     }
     else if (_controlValueRamp <= _minNeutral) { // Reverse
         digitalWrite(_pin1, LOW);
         digitalWrite(_pin2, HIGH);
         analogWrite(_pwmPin, map(_controlValueRamp, _minNeutral, _minInput, 0, _maxPWM));
+        _forward = false;
+        _reverse = true;
         return true;
     }
     else { // Neutral
@@ -88,6 +102,26 @@ boolean TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neu
             digitalWrite(_pin2, LOW);
             digitalWrite(_pwmPin, HIGH);
         }
+        _forward = false;
+        _reverse = false;
+        return false;
+    }
+}
+
+// Brakelight detection function ************************************************************
+boolean TB6612FNG::brakeActive() {
+    
+    unsigned long _currentMillisBrake = millis();
+    
+    // Reset delay timer, if vehicle isn't decelerating
+    if ( (!(_upwards && _reverse)) && (!(_downwards && _forward)) ) {
+        _previousMillisBrake = _currentMillisBrake;
+    }
+    
+    if (_currentMillisBrake - _previousMillisBrake >= 100) {
+        return true;
+    }
+    else {
         return false;
     }
 }

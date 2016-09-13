@@ -14,6 +14,7 @@ class TB6612FNG {
   public:
     TB6612FNG(int pin1, int pin2, int pwmPin, int minInput, int maxInput, int neutralWidth, boolean invert);
     boolean drive(int controlValue, int maxPWM, int rampTime, boolean neutralBrake);
+    boolean brakeActive();
 
   private:
     int _pin1;
@@ -30,7 +31,12 @@ class TB6612FNG {
     boolean _neutralBrake;
     boolean _invert;
     unsigned long _previousMillis = 0;
+    unsigned long _previousMillisBrake = 0;
     byte _state = 0;
+    byte _forward;
+    byte _reverse;
+    byte _upwards;
+    byte _downwards;
 };
 
 #endif
