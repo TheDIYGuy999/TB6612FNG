@@ -9,6 +9,8 @@ This is an Arduino library for the Toshiba TB6612FNG DC motor driver
 - selectable neutral position width. This allows you to optimize it for your joystick
 - the motor rotation direction is reversible in software, so you don't have to switch your motor wires, if the direction is reversed
 - The end-speed is adjustable during runtime. This allows you to simulate different gear ratios
+- drive function returns true while driving or false while in neutral
+- brakeActive function returns true, while the vehicle is getting slower. Used to control brake lights
 
 ## Usage
 
