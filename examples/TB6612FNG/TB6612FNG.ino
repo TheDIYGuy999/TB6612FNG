@@ -41,7 +41,7 @@ void driveMotor() {
 
   int speed1 = 512;
   int speed2 = 512;
-  
+
   // Read Potentiometer
   speed1 = analogRead(A0); // 0 - 1023
   speed2 = analogRead(A1); // 0 - 1023
@@ -49,8 +49,25 @@ void driveMotor() {
   // ***************** Note! The ramptime is intended to protect the gearbox! *******************
   // SYNTAX: Input value, max PWM, ramptime in ms per 1 PWM increment
   // false = brake in neutral position inactive
-  Motor1.drive(speed1, 255, 7, false); // Motor 1
+  if (Motor1.drive(speed1, 255, 7, false) ) { // Motor 1
+    // returns true, if motor is running, so we can do other stuff here!
+  }
   Motor2.drive(speed2, 255, 1, false); // Motor 2
+}
+
+//
+// =======================================================================================================
+// LIGHTS
+// =======================================================================================================
+//
+
+void lights() {
+  if (Motor1.brakeActive()) { // if braking detected from TB6612FNG motor driver
+       //digitalWrite(BRAKELIGHTS, HIGH);
+    }
+    else {
+      //digitalWrite(BRAKELIGHTS, LOW);
+    }
 }
 
 //
@@ -60,8 +77,8 @@ void driveMotor() {
 //
 void setup() {
   // Optional: Motor PWM frequency (Requires the PWMFrequency.h library)
-/*setPWMPrescaler(motor1_pwm, 1); // 123Hz = 256,  492Hz = 64, 3936Hz = 8, 31488Hz = 1
-  setPWMPrescaler(motor2_pwm, 1);*/
+  /*setPWMPrescaler(motor1_pwm, 1); // 123Hz = 256,  492Hz = 64, 3936Hz = 8, 31488Hz = 1
+    setPWMPrescaler(motor2_pwm, 1);*/
 }
 
 //
@@ -73,4 +90,7 @@ void setup() {
 void loop() {
   // Drive the main motor
   driveMotor();
+
+  //Light control
+  lights();
 }
