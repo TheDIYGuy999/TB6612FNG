@@ -1,7 +1,12 @@
 /*
  TB6612FNG.h - Library for the Toshiba TB6612FNG motor driver.
- Created by TheDIYGuy999 June 2016
+ Created by TheDIYGuy999 June - November 2016
  Released into the public domain.
+ 
+ This is Version 1.1
+ 
+ The pin configuration was moved to the separate begin() function.
+ Change your existing programs in accordance with the provided example
  */
 
 #include "Arduino.h"
@@ -9,10 +14,17 @@
 
 // Member definition (code) ========================================================================
 
+TB6612FNG::TB6612FNG() { // Constructor
+    _state = 0;
+    _previousMillis = 0;
+}
+
+// Begin function ************************************************************
+
 // NOTE: The first pin must always be PWM capable, the second only, if the last parameter is set to "true"
 // SYNTAX: IN1, IN2, min. input value, max. input value, neutral position width
 // invert rotation direction, true = both pins are PWM capable
-TB6612FNG::TB6612FNG(int pin1, int pin2, int pwmPin, int minInput, int maxInput, int neutralWidth, boolean invert) { // Constructor
+void TB6612FNG::begin(int pin1, int pin2, int pwmPin, int minInput, int maxInput, int neutralWidth, boolean invert) {
     _pin1 = pin1;
     _pin2 = pin2;
     _pwmPin = pwmPin;
@@ -22,8 +34,7 @@ TB6612FNG::TB6612FNG(int pin1, int pin2, int pwmPin, int minInput, int maxInput,
     _maxNeutral = (_maxInput + _minInput) / 2 + (neutralWidth / 2);
     _controlValueRamp = (_minNeutral + _maxNeutral) / 2;
     _invert = invert;
-    _state = 0;
-    _previousMillis = 0;
+    
     pinMode(_pin1, OUTPUT);
     pinMode(_pin2, OUTPUT);
     pinMode(_pwmPin, OUTPUT);
@@ -41,6 +52,8 @@ boolean TB6612FNG::drive(int controlValue, int maxPWM, int rampTime, boolean neu
     _maxPWM = maxPWM;
     _rampTime = rampTime;
     _neutralBrake = neutralBrake;
+    
+    
     
     if (_invert) {
         _controlValue = map (_controlValue, _minInput, _maxInput, _maxInput, _minInput); // invert driving direction

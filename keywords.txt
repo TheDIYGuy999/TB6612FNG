@@ -12,5 +12,6 @@ TB6612FNG	KEYWORD
 # Methods and Functions (KEYWORD2)
 #######################################
 
+begin	KEYWORD2
 drive	KEYWORD2
 brakeActive	KEYWORD2

@@ -12,6 +12,10 @@ This is an Arduino library for the Toshiba TB6612FNG DC motor driver
 - drive function returns true while driving or false while in neutral
 - brakeActive function returns true, while the vehicle is getting slower. Used to control brake lights
 
+New in V 1.1:
+- Pin configuration moved to begin() function. This change was necessary due to new requirements in my new "Micro RC Receiver" V1.7 software revision
+- If you've used the previous version in a project, you will have to change the pin configuration in accordance with the provided example. The archived V1.0 is enclosed and will not be maintained anymore.
+
 ## Usage
 
 See [example](https://github.com/TheDIYGuy999/TB6612FNG/blob/master/examples/TB6612FNG/TB6612FNG.ino).
