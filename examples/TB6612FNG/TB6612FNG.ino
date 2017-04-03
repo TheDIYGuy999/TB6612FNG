@@ -1,7 +1,7 @@
 // This example was cuccessfully tested on an Sparkfun Pro Micro in 8MHz version
 // It also works on a Pro Mini, but only, if you don't change the PWM frequency
 
-// Version 1.1
+// Version 1.2
 
 //
 // =======================================================================================================
@@ -81,12 +81,12 @@ void driveMotor() {
   speed2 = analogRead(A1); // 0 - 1023
 
   // ***************** Note! The ramptime is intended to protect the gearbox! *******************
-  // SYNTAX: Input value, max PWM, ramptime in ms per 1 PWM increment
+  // SYNTAX: Input value, min PWM, max PWM, ramptime in ms per 1 PWM increment
   // false = brake in neutral position inactive
-  if (Motor1.drive(speed1, 255, 7, false) ) { // Motor 1
+  if (Motor1.drive(speed1, 0, 255, 7, false) ) { // Motor 1
     // returns true, if motor is running, so we can do other stuff here!
   }
-  Motor2.drive(speed2, 255, 1, false); // Motor 2
+  Motor2.drive(speed2, 0, 255, 1, false); // Motor 2
 }
 
 //
