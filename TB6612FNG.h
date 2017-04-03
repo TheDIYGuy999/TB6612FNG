@@ -3,10 +3,17 @@
  Created by TheDIYGuy999 June - November 2016
  Released into the public domain.
  
- This is Version 1.1
+ This is Version 1.2
  
+ Change history:
+ 
+ V1.1:
  The pin configuration was moved to the separate begin() function.
  Change your existing programs in accordance with the provided example
+ 
+ V1.2:
+ minPWM input variable added to the drive() function.
+ Allows to eliminate the backlash in self balancing applications
  */
 
 
@@ -20,7 +27,7 @@ class TB6612FNG {
     public:
     TB6612FNG();
     void begin(int pin1, int pin2, int pwmPin, int minInput, int maxInput, int neutralWidth, boolean invert);
-    boolean drive(int controlValue, int maxPWM, int rampTime, boolean neutralBrake);
+    boolean drive(int controlValue, int minPWM, int maxPWM, int rampTime, boolean neutralBrake);
     boolean brakeActive();
     
     private:
@@ -33,6 +40,7 @@ class TB6612FNG {
     int _maxNeutral;
     int _controlValue;
     int _controlValueRamp;
+    int _minPWM;
     int _maxPWM;
     int _rampTime;
     boolean _neutralBrake;

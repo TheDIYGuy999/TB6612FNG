@@ -11,10 +11,16 @@ This is an Arduino library for the Toshiba TB6612FNG DC motor driver
 - The end-speed is adjustable during runtime. This allows you to simulate different gear ratios
 - drive function returns true while driving or false while in neutral
 - brakeActive function returns true, while the vehicle is getting slower. Used to control brake lights
+- Backlash compensation for self balancing applications
 
 New in V 1.1:
 - Pin configuration moved to begin() function. This change was necessary due to new requirements in my new "Micro RC Receiver" V1.7 software revision
 - If you've used the previous version in a project, you will have to change the pin configuration in accordance with the provided example. The archived V1.0 is enclosed and will not be maintained anymore.
+
+New in V1.2:
+- minPWM input variable added to the drive() function. Allows to eliminate the backlash in self balancing applications
+- IMPORTANT!! You have to add this new input variable to your existing sketches! Ohtherwise it will not compile.
+
 
 ## Usage
 
