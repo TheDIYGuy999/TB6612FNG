@@ -27,4 +27,4 @@ New in V1.2:
 See [example](https://github.com/TheDIYGuy999/TB6612FNG/blob/master/examples/TB6612FNG/TB6612FNG.ino).
 
 
-(c) 2016 TheDIYGuy999
+(c) 2016 - 2017 TheDIYGuy999
