@@ -3,7 +3,7 @@
  Created by TheDIYGuy999 June - November 2016
  Released into the public domain.
  
- This is Version 1.1
+ This is Version 1.2
  
  The pin configuration was moved to the separate begin() function.
  Change your existing programs in accordance with the provided example
